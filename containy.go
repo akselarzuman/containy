@@ -11,15 +11,15 @@ import (
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
-type containy struct {
+type Containy struct {
 	containers []testcontainers.Container
 }
 
-func New() *containy {
-	return &containy{}
+func New() *Containy {
+	return &Containy{}
 }
 
-func (c *containy) CreateContainer(ctx context.Context, config models.Config) (testcontainers.Container, error) {
+func (c *Containy) CreateContainer(ctx context.Context, config models.Config) (testcontainers.Container, error) {
 	waitStrategy, err := c.getWaitStrategy(config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to configure wait strategy: %w", err)
@@ -47,7 +47,7 @@ func (c *containy) CreateContainer(ctx context.Context, config models.Config) (t
 	return container, nil
 }
 
-func (c *containy) Cleanup(ctx context.Context) error {
+func (c *Containy) Cleanup(ctx context.Context) error {
 	var errs []error
 	for _, container := range c.containers {
 		if err := container.Terminate(ctx); err != nil {
@@ -62,7 +62,7 @@ func (c *containy) Cleanup(ctx context.Context) error {
 	return nil
 }
 
-func (containy) getWaitStrategy(config models.Config) (wait.Strategy, error) {
+func (Containy) getWaitStrategy(config models.Config) (wait.Strategy, error) {
 	switch config.WaitStrategy {
 	case models.WaitForLog:
 		logStr, ok := config.WaitConfig["log"]
