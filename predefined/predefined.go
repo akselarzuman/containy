@@ -24,9 +24,9 @@ var (
 				"POSTGRES_DB":       db,
 			},
 			Cmd:          []string{"postgres", "-c", "fsync=off"},
-			WaitStrategy: models.WaitForPort,
+			WaitStrategy: models.WaitForLog,
 			WaitConfig: map[string]string{
-				"port": "5432/tcp",
+				"log": "database system is ready to accept connections",
 			},
 		}
 	}
