@@ -15,7 +15,7 @@ var (
 
 	PostgresConfig = func(user, password, db string) models.Config {
 		return models.Config{
-			Image:        "postgres:17.2-alpine",
+			Image:        "postgres:17.4-alpine",
 			Name:         "postgres-mock",
 			ExposedPorts: []string{"5432:5432/tcp"},
 			Env: map[string]string{
