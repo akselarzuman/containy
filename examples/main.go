@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"github.com/akselarzuman/containy"
@@ -37,6 +38,7 @@ func main() {
 	}
 
 	localstack, err := c.CreateContainer(ctx, predefined.LocalstackConfig(
+		os.Getenv("LOCALSTACK_AUTH_TOKEN"),
 		"dynamodb,s3",
 		"us-east-1",
 	))

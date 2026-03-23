@@ -31,14 +31,15 @@ var (
 		}
 	}
 
-	LocalstackConfig = func(services, region string) models.Config {
+	LocalstackConfig = func(token, services, region string) models.Config {
 		return models.Config{
 			Image:        "localstack/localstack:latest",
 			Name:         "localstack-mock",
 			ExposedPorts: []string{"4566:4566/tcp"},
 			Env: map[string]string{
-				"DEFAULT_REGION": region,
-				"SERVICES":       services,
+				"LOCALSTACK_AUTH_TOKEN": token,
+				"DEFAULT_REGION":        region,
+				"SERVICES":              services,
 			},
 			Strategy: wait.ForLog("Ready."),
 		}
