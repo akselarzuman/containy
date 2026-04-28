@@ -9,7 +9,7 @@ var (
 	RedisConfig = models.Config{
 		Image:        "redis:7-alpine",
 		Name:         "redis-mock",
-		ExposedPorts: []string{"6379:6379/tcp"},
+		ExposedPorts: []string{"6379/tcp"},
 		Strategy:     wait.ForLog("Ready to accept connections"),
 	}
 
@@ -17,7 +17,7 @@ var (
 		return models.Config{
 			Image:        "postgres:17.4-alpine",
 			Name:         "postgres-mock",
-			ExposedPorts: []string{"5432:5432/tcp"},
+			ExposedPorts: []string{"5432/tcp"},
 			Env: map[string]string{
 				"POSTGRES_USER":     user,
 				"POSTGRES_PASSWORD": password,
@@ -35,7 +35,7 @@ var (
 		return models.Config{
 			Image:        "localstack/localstack:latest",
 			Name:         "localstack-mock",
-			ExposedPorts: []string{"4566:4566/tcp"},
+			ExposedPorts: []string{"4566/tcp"},
 			Env: map[string]string{
 				"LOCALSTACK_AUTH_TOKEN": token,
 				"DEFAULT_REGION":        region,
