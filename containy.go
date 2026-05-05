@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"github.com/akselarzuman/containy/models"
+	"github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/api/types/network"
 	"github.com/testcontainers/testcontainers-go"
 )
 
@@ -24,6 +26,18 @@ func (c *Containy) CreateContainer(ctx context.Context, config models.Config) (t
 		Env:          config.Env,
 		Cmd:          config.Cmd,
 		WaitingFor:   config.Strategy,
+	}
+
+	if len(config.PortBindings) > 0 {
+		req.HostConfigModifier = func(hc *container.HostConfig) {
+			if hc.PortBindings == nil {
+				hc.PortBindings = make(network.PortMap)
+			}
+			for containerPort, hostPort := range config.PortBindings {
+				port := network.MustParsePort(containerPort)
+				hc.PortBindings[port] = []network.PortBinding{{HostPort: hostPort}}
+			}
+		}
 	}
 
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{

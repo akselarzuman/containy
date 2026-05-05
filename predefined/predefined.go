@@ -10,6 +10,7 @@ var (
 		Image:        "redis:7-alpine",
 		Name:         "redis-mock",
 		ExposedPorts: []string{"6379/tcp"},
+		PortBindings: map[string]string{"6379/tcp": "6379"},
 		Strategy:     wait.ForLog("Ready to accept connections"),
 	}
 
@@ -18,6 +19,7 @@ var (
 			Image:        "postgres:17.4-alpine",
 			Name:         "postgres-mock",
 			ExposedPorts: []string{"5432/tcp"},
+			PortBindings: map[string]string{"5432/tcp": "5432"},
 			Env: map[string]string{
 				"POSTGRES_USER":     user,
 				"POSTGRES_PASSWORD": password,
@@ -36,6 +38,7 @@ var (
 			Image:        "localstack/localstack:latest",
 			Name:         "localstack-mock",
 			ExposedPorts: []string{"4566/tcp"},
+			PortBindings: map[string]string{"4566/tcp": "4566"},
 			Env: map[string]string{
 				"LOCALSTACK_AUTH_TOKEN": token,
 				"DEFAULT_REGION":        region,
